@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clipboard Reader</title>
+<style>
+  body { font-family: sans-serif; background:#111; color:#eee; padding:24px; }
+  button { font-size:20px; padding:14px 22px; cursor:pointer; }
+  #out { font-size:16px; white-space:pre-wrap; word-break:break-all; background:#222; padding:16px; margin-top:18px; min-height:60px; }
+</style>
+</head>
+<body>
+<h1>Clipboard Reader</h1>
+<p>This page reads the clipboard locally in the browser when the button is clicked. It makes no network calls and sends nothing anywhere.</p>
+<button id="btn">Read clipboard</button>
+<pre id="out">Nothing read yet.</pre>
+<script>
+document.getElementById('btn').addEventListener('click', async () => {
+  const out = document.getElementById('out');
+  try {
+    const text = await navigator.clipboard.readText();
+    out.textContent = text ? text : '(clipboard is empty)';
+  } catch (e) {
+    out.textContent = 'CLIPBOARD_READ_ERROR: ' + e.name + ': ' + e.message;
+  }
+});
+</script>
+</body>
+</html>
